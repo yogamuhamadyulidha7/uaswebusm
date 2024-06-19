@@ -2,6 +2,8 @@
 Latihan Pemrograman Web
 ###################
 
+-   Pastikan php sudah terinstall versi 8.1
+-   Check di cmd / shell dengan perintah : php -v
 -   Clone repositori
 -   Jalankan perintah : composer install
 -   Copy file .env.example menjadi .env
