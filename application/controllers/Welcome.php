@@ -25,19 +25,19 @@ class Welcome extends CI_Controller
      * @see https://codeigniter.com/userguide3/general/urls.html
      */
     private $_blade;
-    
+
     // create construct
     public function __construct()
     {
         parent::__construct();
         $this->_blade = new Blade(VIEWPATH, APPPATH . 'cache');
     }
-    
+
     private function _createView($view, $data)
     {
         echo $this->_blade->make($view, $data)->render();
     }
-    
+
     public function index()
     {
         $user = User::all();
@@ -46,17 +46,27 @@ class Welcome extends CI_Controller
 
     public function simpan()
     {
-        
-        if ($this->input->post()){
 
+        if ($this->input->post()) {
+            $id = $this->input->post('user_id');
+            $jenis = $this->input->post('radio');
+            $article = $this->input->post('article');
+
+            $post = new Post();
+            $post->user_id = $id;
+            $post->jenis = $jenis;
+            $post->article = $article;
+            $post->save();
         }
 
-        redirect('Welcome/index');
+        redirect('Welcome/tampil');
     }
 
     public function hapus($id)
     {
-        
+        $post = \Orm\post::find($id);
+        $post->delete();
+
         redirect('Welcome/tampil');
     }
 
@@ -66,9 +76,12 @@ class Welcome extends CI_Controller
         $users = User::all();
 
         $jenis = 0;
-        if($post->jenis == 'Berita') $jenis = 0;
-        else if($post->jenis == 'Tutorial') $jenis = 1;
-        else if($post->jenis == 'Blog') $jenis = 2;
+        if ($post->jenis == 'Berita')
+            $jenis = 0;
+        else if ($post->jenis == 'Tutorial')
+            $jenis = 1;
+        else if ($post->jenis == 'Blog')
+            $jenis = 2;
 
         $this->_createView('update', ['post' => $post, 'users' => $users, 'jenis' => $jenis]);
     }
