@@ -37,7 +37,6 @@
  * @filesource
  */
 defined('BASEPATH') or exit('No direct script access allowed');
-#[\AllowDynamicProperties]
 /**
  * URI Class
  *
